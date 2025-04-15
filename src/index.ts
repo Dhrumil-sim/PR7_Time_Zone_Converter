@@ -1,5 +1,5 @@
 console.log('✅ index.ts: Starting up...');
-import app from './app.js'; // make sure it's './app.js', not './app'
+import app from './app'; // make sure it's './app.js', not './app'
 import dotenv from 'dotenv';
 
 dotenv.config();

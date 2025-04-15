@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Time Zone Converter</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🕓 Time Zone Converter</h1>
+
+    <!-- Form to submit current time, from timezone, and to timezone -->
+    <form action="/api/time-zone/convert" method="POST">
+      <label for="currentTime">Current Time:</label>
+      <input type="time" id="currentTime" name="currentTime" required />
+
+      <label for="currentTimezone">From Timezone:</label>
+      <select name="currentTimezone" id="currentTimezone" required>
+        <!-- Dynamically create timezones options -->
+        <% timeZones.forEach(zone => { %>
+          <option value="<%= zone.abbr %>"><%= zone.value %></option>
+        <% }); %>
+      </select>
+
+      <label for="convertToTimezone">To Timezone:</label>
+      <select name="convertToTimezone" id="convertToTimezone" required>
+        <!-- Dynamically create timezones options -->
+        <% timeZones.forEach(zone => { %>
+          <option value="<%= zone.abbr %>"><%= zone.value%></option>
+        <% }); %>
+      </select>
+
+      <button type="submit">Convert</button>
+    </form>
+
+    <!-- Show the converted time if available -->
+    <% if (convertedTime) { %>
+      <div class="result">
+        <h2>Converted Time:</h2>
+        <p><strong><%= convertedTime %></strong></p>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

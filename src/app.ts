@@ -1,7 +1,5 @@
-console.log('✅ app.ts: Initializing...');
-
-import express, { Application } from 'express';
-import timeZoneRouter from './routes/timezone.routes.js'; // ✅ must include .js if you're using ESM
+import express, { Application, urlencoded } from 'express';
+import timeZoneRouter from './routes/timezone.routes.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { errorHandler } from './middlewares/errorHandler/errorHandler.js';
@@ -15,9 +13,11 @@ class App {
 
   constructor() {
     this.app = express();
-    this.setRoutes();
     this.setMiddlewares();
+    this.setRoutes();
+
     this.app.use(morgan(':method :url :status :response-time ms'));
+
     this.setErrorHandler();
   }
 
@@ -34,9 +34,11 @@ class App {
   }
 
   private setMiddlewares(): void {
-    this.app.use(express.json());
-    this.app.set('view engine', 'ejs');
+    this.app.use(express.json()); // JSON parsing middleware
     this.app.use(express.static(path.join(__dirName, '../public')));
+    this.app.set('view engine', 'ejs');
+
+    this.app.use(urlencoded({ extended: true }));
   }
 }
 
